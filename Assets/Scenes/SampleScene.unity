@@ -620,8 +620,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 892890956}
-  - component: {fileID: 892890958}
   - component: {fileID: 892890957}
+  - component: {fileID: 892890958}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -676,7 +676,7 @@ Rigidbody:
   m_GameObject: {fileID: 892890955}
   serializedVersion: 4
   m_Mass: 1000
-  m_Drag: 1000
+  m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -693,7 +693,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &899477751
 GameObject:
   m_ObjectHideFlags: 0
@@ -1747,7 +1747,7 @@ Rigidbody:
   m_GameObject: {fileID: 1807211340}
   serializedVersion: 4
   m_Mass: 1000
-  m_Drag: 1000
+  m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -1764,7 +1764,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!136 &1807211343
 CapsuleCollider:
   m_ObjectHideFlags: 0
