@@ -20,6 +20,13 @@ public class Cube : MonoBehaviour
         transform.position = new Vector3(0, (int)Math.Min(Math.Max(GetMouseWorldPos().y, -2), 2), 0) + offset;
     }
 
+    private void OnMouseUp()
+    {
+        Debug.Log("OnMouseUp");
+        // TODO: 在这里判断周围方块的高度是否一致，然后染色
+        // TODO: 存周围方块？
+    }
+
     private Vector3 GetMouseWorldPos()
     {
         Vector3 mousePoint = Input.mousePosition;
