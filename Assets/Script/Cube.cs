@@ -1,10 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
+
+    /// <summary>
+    /// 相邻方块
+    /// </summary>
+    public GameObject[] nearbyCube = { };
 
     private Vector3 offset;
 
@@ -23,8 +29,17 @@ public class Cube : MonoBehaviour
     private void OnMouseUp()
     {
         Debug.Log("OnMouseUp");
-        // TODO: 在这里判断周围方块的高度是否一致，然后染色
-        // TODO: 存周围方块？
+        foreach (GameObject cube in nearbyCube)
+        {
+            if (cube.transform.position.y == transform.position.y)
+            {
+                cube.GetComponent<Renderer>().material.color = Color.blue;
+            }
+            else
+            {
+                cube.GetComponent<Renderer>().material.color = Color.white;
+            }
+        }
     }
 
     private Vector3 GetMouseWorldPos()
