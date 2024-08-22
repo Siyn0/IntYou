@@ -28,6 +28,7 @@ public class Cube : MonoBehaviour
 
     private void OnMouseUp()
     {
+        // TODO: 如果不能战斗结束后还原方块颜色，改为发送事件，所有方块更新颜色
         Debug.Log("OnMouseUp");
         foreach (GameObject cube in nearbyCube)
         {
