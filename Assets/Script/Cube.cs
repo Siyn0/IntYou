@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +10,14 @@ public class Cube : MonoBehaviour
 
     private void OnMouseDown()
     {
-        offset = gameObject.transform.position - new Vector3(0, GetMouseWorldPos().y, 0);
+        // 让移动的y值在{-2，-1，0，1，2}范围内
+        offset = gameObject.transform.position - new Vector3(0, (int)Math.Min(Math.Max(GetMouseWorldPos().y, -2), 2), 0);
     }
 
     private void OnMouseDrag()
     {
-        transform.position = new Vector3(0, GetMouseWorldPos().y, 0) + offset;
+        // 让移动的y值在{-2，-1，0，1，2}范围内
+        transform.position = new Vector3(0, (int)Math.Min(Math.Max(GetMouseWorldPos().y, -2), 2), 0) + offset;
     }
 
     private Vector3 GetMouseWorldPos()
