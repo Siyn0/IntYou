@@ -10,7 +10,7 @@ public class Cube : MonoBehaviour
     /// <summary>
     /// 相邻方块
     /// </summary>
-    public GameObject[] nearbyCube = { };
+    public Cube[] nearbyCube = { };
 
     /// <summary>
     /// 拖动了方块的事件
@@ -21,6 +21,11 @@ public class Cube : MonoBehaviour
     public static event dragEventHandler onDragEvent;
 
     private Vector3 offset;
+
+    /// <summary>
+    /// 已经变蓝的方块（防止重复）
+    /// </summary>
+    private List<Cube> hasBlue = new List<Cube>();
 
     private void OnMouseDown()
     {
@@ -44,14 +49,19 @@ public class Cube : MonoBehaviour
     private void dragEvent(Cube currentCube)
     {
 
-        foreach (GameObject cube in nearbyCube)
+        foreach (Cube cube in nearbyCube)
         {
-            cube.GetComponent<Renderer>().material.color = Color.white;
+            cube.gameObject.GetComponent<Renderer>().material.color = Color.white;
         }
 
         StartCoroutine(updateDelayed(currentCube));
     }
 
+    /// <summary>
+    /// 延迟后更新颜色，防止和白色冲突
+    /// </summary>
+    /// <param name="currentCube">当前更新的方块</param>
+    /// <returns></returns>
     IEnumerator updateDelayed(Cube currentCube)
     {
         // Debug.Log("updateDelayed");
@@ -59,19 +69,32 @@ public class Cube : MonoBehaviour
 
         if (currentCube == this)
         {
-            foreach (GameObject cube in nearbyCube)
-            {
-                Debug.Log("[zzzz]判断方块" + cube.name + gameObject.name + "  y:" + cube.transform.position.y + "  " + transform.position.y);
+            blueCube(currentCube);
+        }
+    }
 
-                if (cube.transform.position.y == transform.position.y)
+    private void blueCube(Cube currentCube)
+    {
+        foreach (Cube cube in currentCube.nearbyCube)
+        {
+            // Debug.Log("[zzzz]判断方块" + cube.name + gameObject.name + "  y:" + cube.transform.position.y + "  " + transform.position.y);
+
+            if (cube.gameObject.transform.position.y == transform.position.y)
+            {
+                cube.gameObject.GetComponent<Renderer>().material.color = Color.blue;
+                if (!hasBlue.Contains(cube))
                 {
-                    cube.GetComponent<Renderer>().material.color = Color.blue;
+                    hasBlue.Add(cube);
+                    blueCube(cube);
                 }
-                else
-                {
-                    cube.GetComponent<Renderer>().material.color = Color.white;
-                }
+
+                // TODO: 睡醒了看吧
             }
+            else
+            {
+                cube.gameObject.GetComponent<Renderer>().material.color = Color.white;
+            }
+            Debug.Log("[zzzz]判断完了");
         }
     }
 
