@@ -55,7 +55,7 @@ public class Cube : MonoBehaviour
     IEnumerator updateDelayed(Cube currentCube)
     {
         // Debug.Log("updateDelayed");
-        yield return new WaitForSeconds(0.2f); // 延迟0.1秒
+        yield return new WaitForSeconds(0.2f); // 延迟0.2秒
 
         if (currentCube == this)
         {
