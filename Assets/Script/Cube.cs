@@ -12,6 +12,14 @@ public class Cube : MonoBehaviour
     /// </summary>
     public GameObject[] nearbyCube = { };
 
+    /// <summary>
+    /// 拖动了方块的事件
+    /// </summary>
+    /// <param name="currentCube">被拖动的方块</param>
+    public delegate void dragEventHandler(Cube currentCube);
+
+    public static event dragEventHandler onDragEvent;
+
     private Vector3 offset;
 
     private void OnMouseDown()
@@ -28,19 +36,41 @@ public class Cube : MonoBehaviour
 
     private void OnMouseUp()
     {
-        // TODO: 如果不能战斗结束后还原方块颜色，改为发送事件，所有方块更新颜色
-        Debug.Log("OnMouseUp");
+        // 发送事件，所有方块更新颜色
+        // Debug.Log("OnMouseUp");
+        onDragEvent?.Invoke(this);
+    }
+
+    private void dragEvent(Cube currentCube)
+    {
+
         foreach (GameObject cube in nearbyCube)
         {
-            if (cube.transform.position.y == transform.position.y)
+            cube.GetComponent<Renderer>().material.color = Color.white;
+        }
+
+        StartCoroutine(updateDelayed(currentCube));
+    }
+
+    IEnumerator updateDelayed(Cube currentCube)
+    {
+        // Debug.Log("updateDelayed");
+
+        if (currentCube == this)
+        {
+            foreach (GameObject cube in nearbyCube)
             {
-                cube.GetComponent<Renderer>().material.color = Color.blue;
-            }
-            else
-            {
-                cube.GetComponent<Renderer>().material.color = Color.white;
+                if (cube.transform.position.y == transform.position.y)
+                {
+                    cube.GetComponent<Renderer>().material.color = Color.blue;
+                }
+                else
+                {
+                    cube.GetComponent<Renderer>().material.color = Color.white;
+                }
             }
         }
+        yield return new WaitForSeconds(0.1f); // 延迟0.1秒
     }
 
     private Vector3 GetMouseWorldPos()
@@ -53,7 +83,7 @@ public class Cube : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        Cube.onDragEvent += dragEvent;
     }
 
     // Update is called once per frame
