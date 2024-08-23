@@ -55,11 +55,14 @@ public class Cube : MonoBehaviour
     IEnumerator updateDelayed(Cube currentCube)
     {
         // Debug.Log("updateDelayed");
+        yield return new WaitForSeconds(0.2f); // 延迟0.1秒
 
         if (currentCube == this)
         {
             foreach (GameObject cube in nearbyCube)
             {
+                Debug.Log("[zzzz]判断方块" + cube.name + gameObject.name + "  y:" + cube.transform.position.y + "  " + transform.position.y);
+
                 if (cube.transform.position.y == transform.position.y)
                 {
                     cube.GetComponent<Renderer>().material.color = Color.blue;
@@ -70,7 +73,6 @@ public class Cube : MonoBehaviour
                 }
             }
         }
-        yield return new WaitForSeconds(0.1f); // 延迟0.1秒
     }
 
     private Vector3 GetMouseWorldPos()
