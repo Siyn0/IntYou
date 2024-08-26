@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class Cube : MonoBehaviour
 {
@@ -77,7 +78,7 @@ public class Cube : MonoBehaviour
     {
         foreach (GameObject cube in currentCube.nearbyCube)
         {
-            Debug.Log("[zzzz]判断方块" + cube.name + gameObject.name + "  y:" + cube.transform.position.y + "  " + transform.position.y);
+            // Debug.Log("[zzzz]判断方块" + cube.name + gameObject.name + "  y:" + cube.transform.position.y + "  " + transform.position.y);
 
             if (cube.transform.position.y == transform.position.y)
             {
@@ -85,14 +86,15 @@ public class Cube : MonoBehaviour
                 if (!hasBlue.Contains(cube))
                 {
                     hasBlue.Add(cube);
+                    // cube.transform.SetParent(currentCube.transform);
                     blueCube(cube.GetComponent<Cube>());
                 }
             }
             else
             {
-                cube.gameObject.GetComponent<Renderer>().material.color = Color.white;
+                cube.GetComponent<Renderer>().material.color = Color.white;
             }
-            Debug.Log("[zzzz]判断完了");
+            // Debug.Log("[zzzz]判断完了");
         }
     }
 
