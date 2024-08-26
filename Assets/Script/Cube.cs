@@ -10,7 +10,7 @@ public class Cube : MonoBehaviour
     /// <summary>
     /// 相邻方块
     /// </summary>
-    public Cube[] nearbyCube = { };
+    public GameObject[] nearbyCube = { };
 
     /// <summary>
     /// 拖动了方块的事件
@@ -25,7 +25,7 @@ public class Cube : MonoBehaviour
     /// <summary>
     /// 已经变蓝的方块（防止重复）
     /// </summary>
-    private List<Cube> hasBlue = new List<Cube>();
+    private List<GameObject> hasBlue = new List<GameObject>();
 
     private void OnMouseDown()
     {
@@ -49,9 +49,9 @@ public class Cube : MonoBehaviour
     private void dragEvent(Cube currentCube)
     {
 
-        foreach (Cube cube in nearbyCube)
+        foreach (GameObject cube in nearbyCube)
         {
-            cube.gameObject.GetComponent<Renderer>().material.color = Color.white;
+            cube.GetComponent<Renderer>().material.color = Color.white;
         }
 
         StartCoroutine(updateDelayed(currentCube));
@@ -75,20 +75,18 @@ public class Cube : MonoBehaviour
 
     private void blueCube(Cube currentCube)
     {
-        foreach (Cube cube in currentCube.nearbyCube)
+        foreach (GameObject cube in currentCube.nearbyCube)
         {
-            // Debug.Log("[zzzz]判断方块" + cube.name + gameObject.name + "  y:" + cube.transform.position.y + "  " + transform.position.y);
+            Debug.Log("[zzzz]判断方块" + cube.name + gameObject.name + "  y:" + cube.transform.position.y + "  " + transform.position.y);
 
-            if (cube.gameObject.transform.position.y == transform.position.y)
+            if (cube.transform.position.y == transform.position.y)
             {
-                cube.gameObject.GetComponent<Renderer>().material.color = Color.blue;
+                cube.GetComponent<Renderer>().material.color = Color.blue;
                 if (!hasBlue.Contains(cube))
                 {
                     hasBlue.Add(cube);
-                    blueCube(cube);
+                    blueCube(cube.GetComponent<Cube>());
                 }
-
-                // TODO: 睡醒了看吧
             }
             else
             {
